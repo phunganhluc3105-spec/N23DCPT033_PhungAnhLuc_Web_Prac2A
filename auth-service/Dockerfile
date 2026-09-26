@@ -22,7 +22,7 @@ RUN apk add --no-cache openssl
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 COPY src ./src
-COPY package.json ./
+COPY --from=builder /app/package*.json ./
 
 EXPOSE 3003
 CMD ["node", "src/index.js"]

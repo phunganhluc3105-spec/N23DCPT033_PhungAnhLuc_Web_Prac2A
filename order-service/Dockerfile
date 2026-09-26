@@ -15,7 +15,7 @@ ENV NODE_ENV=production
 # Copy node_modules từ stage 1
 COPY --from=builder /app/node_modules ./node_modules
 COPY src ./src
-COPY package.json ./
+COPY --from=builder /app/package*.json ./
 
 EXPOSE 3002
 CMD ["node", "src/index.js"]
