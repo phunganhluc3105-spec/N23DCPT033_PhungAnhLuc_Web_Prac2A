@@ -8,9 +8,9 @@ const PORT = process.env.PORT || 3002;
 // Kết nối cơ sở dữ liệu MongoDB
 connectDB();
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`🛒 [Order Service] running on port ${PORT}`);
-  console.log(`📚 Swagger Docs available at http://localhost:${PORT}/api-docs`);
+  console.log(`📚 Swagger Docs available at http://0.0.0.0:${PORT}/api-docs`);
 });
 
 // Graceful shutdown handling

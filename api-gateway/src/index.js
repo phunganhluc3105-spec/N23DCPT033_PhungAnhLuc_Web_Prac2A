@@ -112,7 +112,7 @@ app.use(
 );
 
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 [API Gateway] running on port ${PORT}`);
   console.log(`➡️  Proxying /api/auth     -> ${AUTH_SERVICE_URL} [PUBLIC]`);
   console.log(`➡️  Proxying /api/products -> ${PRODUCT_SERVICE_URL} [PUBLIC]`);

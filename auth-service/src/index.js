@@ -3,7 +3,7 @@ const app = require("./app");
 
 const PORT = process.env.PORT || 3003;
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(`🔐 [Auth Service] running on port ${PORT}`);
   console.log(`➡️  Endpoints: POST /api/auth/register, POST /api/auth/login, POST /api/auth/refresh, GET /api/auth/me`);
 });
