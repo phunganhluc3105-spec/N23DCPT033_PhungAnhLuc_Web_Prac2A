@@ -3,19 +3,26 @@ const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "demo",
-  api_key: process.env.CLOUDINARY_API_KEY || "123456789",
-  api_secret: process.env.CLOUDINARY_API_SECRET || "abcdefghijklmnopqrstuvwxyz",
-});
+// Hỗ trợ cả CLOUDINARY_URL hoặc 3 biến rời
+if (process.env.CLOUDINARY_URL) {
+  // Cloudinary tự động đọc CLOUDINARY_URL từ process.env
+  cloudinary.config();
+} else {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "demo",
+    api_key: process.env.CLOUDINARY_API_KEY || "123456789",
+    api_secret: process.env.CLOUDINARY_API_SECRET || "abcdefghijklmnopqrstuvwxyz",
+  });
+}
 
 let storage;
 
 // Kiểm tra xem đã có đủ credentials của Cloudinary chưa
 const isCloudinaryConfigured = Boolean(
-  process.env.CLOUDINARY_CLOUD_NAME &&
-  process.env.CLOUDINARY_API_KEY &&
-  process.env.CLOUDINARY_API_SECRET
+  process.env.CLOUDINARY_URL ||
+  (process.env.CLOUDINARY_CLOUD_NAME &&
+   process.env.CLOUDINARY_API_KEY &&
+   process.env.CLOUDINARY_API_SECRET)
 );
 
 if (isCloudinaryConfigured) {
