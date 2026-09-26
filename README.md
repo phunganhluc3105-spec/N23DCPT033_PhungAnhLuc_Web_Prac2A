@@ -15,6 +15,7 @@
 * **API Gateway (Public Endpoint):** [https://gateway-service-production-69d0.up.railway.app](https://gateway-service-production-69d0.up.railway.app)
 * **Health Check Gateway:** [https://gateway-service-production-69d0.up.railway.app/health](https://gateway-service-production-69d0.up.railway.app/health)
 * **API Danh sách sản phẩm (Public):** [https://gateway-service-production-69d0.up.railway.app/api/products](https://gateway-service-production-69d0.up.railway.app/api/products)
+* **API Swagger UI (Public):** [https://gateway-service-production-69d0.up.railway.app/api-docs](https://gateway-service-production-69d0.up.railway.app/api-docs) 
 * **Cloud Database:**
   * **PostgreSQL:** Supabase Pooler (`aws-0-ap-southeast-1.pooler.supabase.com`)
   * **MongoDB:** MongoDB Atlas Replica Set Cluster
@@ -129,7 +130,7 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 8: Order Service — MongoDB Atlas & Tự sinh orderCode
+### 📸 ẢNH 8: Order Service — MongoDB Atlas & Tự sinh orderCode
 *Đơn hàng được lưu vào MongoDB với mã `ORD-YYYYMMDD-XXXX` và trường ảo `totalItems`.*
 
 ![Order Creation](./docs/images/08_order_created.png)
