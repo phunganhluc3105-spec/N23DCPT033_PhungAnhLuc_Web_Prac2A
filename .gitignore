@@ -31,3 +31,6 @@ mongodata/
 docs/GUIDE.md
 *.pdf
 
+# Frontend separate repository
+lab2a-frontend/
+
