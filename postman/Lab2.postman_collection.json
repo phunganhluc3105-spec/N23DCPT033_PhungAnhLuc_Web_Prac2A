@@ -55,6 +55,9 @@
                   "if (res.accessToken) {",
                   "    pm.collectionVariables.set(\"access_token\", res.accessToken);",
                   "    pm.collectionVariables.set(\"refresh_token\", res.refreshToken);",
+                  "}",
+                  "if (res.user && res.user.email) {",
+                  "    pm.collectionVariables.set(\"user_email\", res.user.email);",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -71,7 +74,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Sinh Vien Lab2\",\n  \"email\": \"sinhvien@example.com\",\n  \"password\": \"123456\"\n}"
+              "raw": "{\n  \"name\": \"Sinh Vien Lab2\",\n  \"email\": \"sinhvien_{{$timestamp}}@example.com\",\n  \"password\": \"123456\"\n}"
             },
             "url": {
               "raw": "{{gateway_url}}/api/auth/register",
@@ -110,7 +113,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"sinhvien@example.com\",\n  \"password\": \"123456\"\n}"
+              "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"123456\"\n}"
             },
             "url": {
               "raw": "{{gateway_url}}/api/auth/login",
@@ -285,7 +288,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"iPad Pro M4 2024\",\n  \"price\": 28990000,\n  \"stock\": 15,\n  \"description\": \"Apple M4 Chip 256GB Wi-Fi\"\n}"
+              "raw": "{\n  \"name\": \"iPad Pro M4 {{$timestamp}}\",\n  \"price\": 28990000,\n  \"stock\": 15,\n  \"description\": \"Apple M4 Chip 256GB Wi-Fi\"\n}"
             },
             "url": {
               "raw": "{{gateway_url}}/api/products",
