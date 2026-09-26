@@ -7,19 +7,41 @@ const helmet = require("helmet");
 const authenticate = require("./middleware/auth");
 require("dotenv").config();
 
+const swaggerSpec = require("./swaggerSpec");
+
 const app = express();
 
 // ─── Security & CORS Middleware ───────────────
-app.use(helmet());
+// Tắt CSP mặc định để giao diện Swagger UI CDN tải CSS/JS mượt mà
 app.use(
-  cors({
-    origin: process.env.ALLOWED_ORIGINS
-      ? process.env.ALLOWED_ORIGINS.split(",")
-      : "*",
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+  helmet({
+    contentSecurityPolicy: false,
   })
 );
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim())
+  : ["*"];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes("*")) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.includes("localhost") ||
+        origin.includes("127.0.0.1")
+      ) {
+        return callback(null, true);
+      }
+      return callback(new Error("CORS policy does not allow access from this origin."));
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+app.options("*", cors());
 
 // ─── Rate Limiting: 100 requests / 15 phút / IP ─
 const limiter = rateLimit({
@@ -34,16 +56,56 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// ─── Swagger UI Interactive Docs ──────────────
+app.get("/api-docs.json", (req, res) => res.json(swaggerSpec));
+
+app.get("/api-docs", (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Microservices API Gateway Docs — Lab 2a</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  <style>
+    body { margin: 0; padding: 0; background: #fdfdfd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .topbar { display: none !important; }
+    .swagger-ui .info { margin: 25px 0; }
+    .swagger-ui .info .title { font-size: 28px; color: #1e1b4b; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+  <script>
+    window.onload = () => {
+      window.ui = SwaggerUIBundle({
+        url: '/api-docs.json',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+        ],
+        layout: "BaseLayout"
+      });
+    };
+  </script>
+</body>
+</html>`);
+});
+
 // ─── Gateway Root & Health check ──────────────
 app.get("/", (req, res) => {
   res.json({
     name: "Microservices Shop API Gateway",
     version: "1.0.0",
     status: "online",
+    documentation: "/api-docs",
     endpoints: {
+      swagger: "/api-docs",
       health: "/health",
       auth: "/api/auth (Public: register, login, refresh)",
-      products: "/api/products (Public catalog)",
+      products: "/api/products (Public catalog, Redis Cache)",
       orders: "/api/orders (Protected: Requires Bearer JWT)",
     },
   });

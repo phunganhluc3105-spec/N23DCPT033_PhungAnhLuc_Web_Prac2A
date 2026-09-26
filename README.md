@@ -1,5 +1,5 @@
 # BÁO CÁO THỰC HÀNH LAB 2A: KIẾN TRÚC MICROSERVICES
-## Môn học: Phát triển ứng dụng Web nâng cao
+## Môn học: Lập trình web
 
 ---
 
@@ -7,7 +7,7 @@
 * **Họ và tên:** Phùng Anh Lực
 * **Mã số sinh viên (MSSV):** N23DCPT033
 * **Repository Backend:** [N23DCPT033_PhungAnhLuc_Web_Prac2A](https://github.com/phunganhluc3105-spec/N23DCPT033_PhungAnhLuc_Web_Prac2A)
-* **Repository Frontend (Next.js 15):** [N23DCPT033_PhungAnhLuc_Web_Prac2A-FE](https://github.com/phunganhluc3105-spec/N23DCPT033_PhungAnhLuc_Web_Prac2A-FE)
+* **Repository Frontend:** [N23DCPT033_PhungAnhLuc_Web_Prac2A-FE](https://github.com/phunganhluc3105-spec/N23DCPT033_PhungAnhLuc_Web_Prac2A-FE)
 
 ---
 
@@ -74,29 +74,8 @@ graph TD
 
 ---
 
-## 2. BẢNG TỔNG HỢP TIÊU CHÍ ĐÁNH GIÁ (TỰ CHẤM 100/100)
-
-| STT | Nhóm tiêu chí | Yêu cầu kỹ thuật | Hiện thực | Tự đánh giá |
-| :---: | :--- | :--- | :--- | :---: |
-| **1** | **Product Service** | Khởi động độc lập, kết nối PostgreSQL, CRUD | Hoàn thành đầy đủ | **10 / 10** |
-| **2** | **Prisma ORM** | Schema chuẩn quan hệ 1-N, enum, migration, seed | Hoàn thành đầy đủ | **10 / 10** |
-| **3** | **Order Service** | Mongoose schema, hooks, virtual fields, CRUD | Hoàn thành đầy đủ | **10 / 10** |
-| **4** | **API Gateway** | Reverse proxy, rate limiting, CORS, error handle | Hoàn thành đầy đủ | **10 / 10** |
-| **5** | **Containerization** | Dockerfile multi-stage, Docker Compose 6 dịch vụ | Hoàn thành đầy đủ | **10 / 10** |
-| **6** | **Req 1 (Nâng cao)** | Auth Service độc lập: JWT Access + Refresh token | Hoàn thành đầy đủ | **10 / 10** |
-| **7** | **Req 2 (Nâng cao)** | Gateway JWT Verification bảo vệ route Orders | Hoàn thành đầy đủ | **10 / 10** |
-| **8** | **Req 3 (Nâng cao)** | Upload ảnh sản phẩm lên Cloudinary CDN | Hoàn thành đầy đủ | **10 / 10** |
-| **9** | **Req 4 (Nâng cao)** | Caching danh mục sản phẩm bằng Redis (TTL 5m) | Hoàn thành đầy đủ | **10 / 10** |
-| **10** | **Req 5 (Nâng cao)** | Swagger UI với Bearer Token cho Order Service | Hoàn thành đầy đủ | **10 / 10** |
-| **TỔNG** | **ĐIỂM TỔNG CỘNG** | **HOÀN THÀNH XUẤT SẮC 10/10 TIÊU CHÍ** | | **100 / 100** |
-
----
-
-## 3. HÌNH ẢNH MINH CHỨNG CHI TIẾT TỪNG TIÊU CHÍ
-
-> 💡 **Hướng dẫn:** Bạn hãy chụp ảnh thực tế và lưu vào thư mục `docs/images/` rồi cập nhật đường dẫn tương ứng bên dưới.
-
-### 📸 Minh chứng 1: Kiến trúc triển khai trên Railway Cloud
+## 2. HÌNH ẢNH TỔNG QUAN
+### 📸 ẢNH 1: Kiến trúc triển khai trên Railway Cloud
 *Toàn bộ 4 microservices và Redis đều ở trạng thái Online trong cùng 1 mạng riêng tư.*
 
 ![Railway Architecture Canvas](./docs/images/01_railway_architecture.png)
@@ -104,7 +83,7 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 2: API Gateway Live Health Check
+### 📸 ẢNH 2: API Gateway Live Health Check
 *API Gateway hoạt động trên tên miền công khai và điều phối các dịch vụ.*
 
 ![API Gateway Health Check](./docs/images/02_gateway_health.png)
@@ -112,7 +91,7 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 3: Yêu cầu nâng cao 1 — Auth Service (Đăng ký, Đăng nhập & JWT)
+### 📸 ẢNH 3: Auth Service (Đăng ký, Đăng nhập & JWT)
 *Cấp phát accessToken (15 phút) và refreshToken (7 ngày) lưu an toàn.*
 
 ![Auth Register & Login](./docs/images/03_auth_tokens.png)
@@ -120,7 +99,7 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 4: Yêu cầu nâng cao 2 — Gateway JWT Auth Guard
+### 📸 ẢNH 4: Gateway JWT Auth Guard
 *Gateway chặn 401 Unauthorized khi truy cập /api/orders không có Token.*
 
 ![Gateway JWT Protection](./docs/images/04_jwt_guard_401.png)
@@ -128,7 +107,7 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 5: Product Service — Phân trang, Tìm kiếm & Lọc
+### 📸 ẢNH 5: Product Service — Phân trang, Tìm kiếm & Lọc
 *Kết quả trả về danh sách sản phẩm với cấu trúc pagination.*
 
 ![Product Pagination & Filter](./docs/images/05_product_pagination.png)
@@ -136,16 +115,14 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 6: Yêu cầu nâng cao 4 — Caching dữ liệu với Redis
-*Minh chứng tốc độ phản hồi tức thì từ RAM Redis (`fromCache: true`).*
+### 📸 ẢNH 6:Yêu cầu 4 Caching dữ liệu với Redis
 
 ![Redis Cache Verification](./docs/images/06_redis_caching.png)
-*(Hình 6: So sánh lần gọi 1 "fromCache": false và lần gọi 2 "fromCache": true lấy từ RAM Redis)*
+*(Hình 6: Ở lần gọi thứ 2 "fromCache": true lấy từ RAM Redis)*
 
 ---
 
-### 📸 Minh chứng 7: Yêu cầu nâng cao 3 — Upload ảnh sản phẩm lên Cloudinary
-*Ảnh tải lên thành công và trả về URL trực tiếp từ res.cloudinary.com.*
+### 📸 ẢNH 7: Yêu cầu 3 Upload ảnh sản phẩm lên Cloudinary
 
 ![Cloudinary Upload](./docs/images/07_cloudinary_upload.png)
 *(Hình 7: Gọi POST /api/products/:id/image kèm file ảnh, trả về HTTP 200 kèm link Cloudinary)*
@@ -160,7 +137,7 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 9: Yêu cầu nâng cao 5 — Swagger UI với Bearer Auth
+### 📸 Minh chứng 9: Yêu cầu 5 — Swagger UI với Bearer Auth
 *Giao diện tài liệu tương tác với nút Authorize Bearer Token.*
 
 ![Swagger UI Docs](./docs/images/09_swagger_bearer_auth.png)
@@ -178,23 +155,15 @@ graph TD
 
 ---
 
-### 📸 Minh chứng 11: Postman Automated Test Suite (Xanh 100%)
-*Toàn bộ 18+ kịch bản kiểm thử tự động đều vượt qua (Pass).*
+### 📸 Minh chứng 11: Postman Automated Test Suite
+*Toàn bộ kịch bản kiểm thử tự động đều vượt qua (Pass).*
 
 ![Postman Test Runner 100% Pass](./docs/images/11_postman_pass_all.png)
-*(Hình 11: Màn hình Postman Collection Runner hoàn thành 100% test cases không có lỗi)*
+*(Hình 11: Màn hình Postman Collection Runner hoàn thành 100% test cases)*
 
 ---
 
-### 📸 Minh chứng 12: Giao diện người dùng Web Storefront (Next.js 15)
-*Giao diện thương mại điện tử hiện đại, hiển thị huy hiệu Redis Cache và tích hợp đầy đủ tính năng.*
-
-![Next.js Storefront](./docs/images/12_frontend_storefront.png)
-*(Hình 12: Giao diện web Next.js 15 hiển thị danh mục sản phẩm, nhãn Redis Cache và modal giỏ hàng)*
-
----
-
-## 4. HƯỚNG DẪN KHỞI CHẠY DỰ ÁN
+## 3. HƯỚNG DẪN KHỞI CHẠY DỰ ÁN
 
 ### 🐳 Khởi chạy môi trường Local bằng Docker Compose
 Chỉ cần 1 câu lệnh duy nhất để khởi động toàn bộ 7 containers (4 services + 3 databases/cache):
@@ -211,10 +180,3 @@ docker compose up -d --build
 docker compose exec product_service node prisma/seed.js
 ```
 
-### 💻 Khởi chạy giao diện Frontend (Next.js 15)
-```bash
-cd lab2a-frontend
-npm install
-npm run dev
-# Mở trình duyệt tại http://localhost:3000
-```
